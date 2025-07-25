@@ -3,19 +3,27 @@
 namespace App\Tests\Service\SimpleClass;
 
 use App\Service\SimpleClass\CalculateService;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class CalculateServiceTest extends TestCase
 {
 
-    public function testSumNumber(): void
+    #[DataProvider('data')]
+    public function testSumNumberWithDataProvider($a, $b, $expected): void
     {
-        $a = 5;
-        $b = 10;
-
         $calculateService = new CalculateService();
         $response = $calculateService->sumNumber($a, $b);
-        $this->assertEquals(15, $response);
+        $this->assertEquals($expected, $response);
+    }
+
+    public static function data(): array
+    {
+        return [
+            "Sumatoria normal" => [1, 2, 3],
+            "Sumatoria negativa" => [5, -5, 0],
+            "otra suma" => [0, 0, 0],
+        ];
     }
 
 }
